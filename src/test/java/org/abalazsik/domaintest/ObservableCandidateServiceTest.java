@@ -46,7 +46,7 @@ public class ObservableCandidateServiceTest {
         expect(candidateRepository.save(anyObject())).andAnswer(() -> {
             return Observable.just(getCurrentArgument(0));
         });
-        expect(candidateRepository.exists(anyObject())).andReturn(Observable.just(Boolean.FALSE));
+        expect(candidateRepository.exists(EMAIL)).andReturn(Observable.just(Boolean.FALSE));
         replay(candidateRepository);
 
         CreateCandidate createCandidate = new CreateCandidate(
@@ -69,7 +69,7 @@ public class ObservableCandidateServiceTest {
         expect(timeSource.now()).andReturn(now).once();
         replay(timeSource);
         
-        expect(candidateRepository.exists(anyObject())).andReturn(Observable.just(Boolean.TRUE));
+        expect(candidateRepository.exists(EMAIL)).andReturn(Observable.just(Boolean.TRUE));
         replay(candidateRepository);
 
         CreateCandidate createCandidate = new CreateCandidate(

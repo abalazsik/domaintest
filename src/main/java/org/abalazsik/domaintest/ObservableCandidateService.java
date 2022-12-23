@@ -24,7 +24,7 @@ public class ObservableCandidateService {
             repository.exists(createCandidate.getEmail()).subscribe(exists -> {
                 if (exists) {
                     subscriber.onError(new CandidateException("Candidate already exists"));
-                    subscriber.onComplete();
+                    return;
                 }
 
                 LocalDateTime now = timeSource.now();
@@ -36,9 +36,9 @@ public class ObservableCandidateService {
                 );
 
                 repository.save(candidateToSave).subscribe(saved -> {
-                    subscriber.onNext(saved);
-                    subscriber.onComplete();
-                }, error -> subscriber.onError(error));
+                            subscriber.onNext(saved);
+                            subscriber.onComplete();
+                        }, error -> subscriber.onError(error));
             }, error -> subscriber.onError(error));
         });
     }

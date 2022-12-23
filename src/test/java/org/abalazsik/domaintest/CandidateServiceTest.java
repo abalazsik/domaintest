@@ -50,7 +50,7 @@ public class CandidateServiceTest {
         expect(candidateRepository.save(anyObject())).andAnswer(() -> {
             return getCurrentArgument(0);
         });
-        expect(candidateRepository.exists(anyObject())).andReturn(Boolean.FALSE);
+        expect(candidateRepository.exists(EMAIL)).andReturn(Boolean.FALSE);
         replay(candidateRepository);
 
         CreateCandidate createCandidate = new CreateCandidate(
@@ -64,7 +64,7 @@ public class CandidateServiceTest {
     @Test
     public void expectSaveThrowsExceptionWhenCandidateAlreadyExists() {
         thrown.expect(CandidateException.class);
-        expect(candidateRepository.exists(anyObject())).andReturn(Boolean.TRUE);
+        expect(candidateRepository.exists(EMAIL)).andReturn(Boolean.TRUE);
         replay(candidateRepository);
 
         CreateCandidate createCandidate = new CreateCandidate(

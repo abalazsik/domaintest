@@ -54,7 +54,7 @@ public class AsyncCandidateServiceTest {
         expect(candidateRepository.save(anyObject())).andAnswer(() -> {
             return immediately(getCurrentArgument(0));
         });
-        expect(candidateRepository.exists(anyObject())).andReturn(immediately(Boolean.FALSE));
+        expect(candidateRepository.exists(EMAIL)).andReturn(immediately(Boolean.FALSE));
         replay(candidateRepository);
 
         CreateCandidate createCandidate = new CreateCandidate(
@@ -68,7 +68,7 @@ public class AsyncCandidateServiceTest {
     @Test
     public void expectSaveThrowsExceptionWhenCandidateAlreadyExists() {
         thrown.expect(RuntimeException.class);
-        expect(candidateRepository.exists(anyObject())).andReturn(immediately(Boolean.TRUE));
+        expect(candidateRepository.exists(EMAIL)).andReturn(immediately(Boolean.TRUE));
         replay(candidateRepository);
 
         CreateCandidate createCandidate = new CreateCandidate(
